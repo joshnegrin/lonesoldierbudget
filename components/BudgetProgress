@@ -1,0 +1,90 @@
+import React, { useMemo } from 'react';
+import { Transaction, Budget, ExpenseCategory } from '../types';
+
+interface BudgetProgressProps {
+  expenses: Transaction[];
+  budget: Budget;
+  onEditBudget: () => void;
+}
+
+const ProgressBar: React.FC<{ value: number; max: number; }> = ({ value, max }) => {
+  const percentage = max > 0 ? (value / max) * 100 : 0;
+  const clampedPercentage = Math.min(percentage, 100);
+
+  const getColor = () => {
+    if (percentage >= 90) return 'bg-rose-500';
+    if (percentage >= 75) return 'bg-yellow-500';
+    return 'bg-emerald-500';
+  };
+
+  return (
+    <div className="w-full bg-gray-700 rounded-full h-2.5">
+      <div
+        className={`h-2.5 rounded-full transition-all duration-500 ${getColor()}`}
+        style={{ width: `${clampedPercentage}%` }}
+        role="progressbar"
+        aria-valuenow={percentage}
+        aria-valuemin={0}
+        aria-valuemax={100}
+      ></div>
+    </div>
+  );
+};
+
+const BudgetProgress: React.FC<BudgetProgressProps> = ({ expenses, budget, onEditBudget }) => {
+  const actualSpending = useMemo(() => {
+    return expenses.reduce((acc, expense) => {
+      const category = expense.category || ExpenseCategory.Other;
+      acc[category] = (acc[category] || 0) + expense.amount;
+      return acc;
+    }, {} as Record<ExpenseCategory, number>);
+  }, [expenses]);
+  
+  const formatCurrency = (amount: number) => {
+    return amount.toLocaleString('he-IL', { style: 'currency', currency: 'ILS', minimumFractionDigits: 0, maximumFractionDigits: 0 });
+  };
+
+  const budgetedCategories = Object.entries(budget.expenseBudgets)
+    .filter(([, budgetedAmount]) => budgetedAmount > 0)
+    .sort(([, a], [, b]) => b - a);
+
+  return (
+    <div className="bg-gray-800 p-6 rounded-xl shadow-lg h-full">
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-xl font-semibold text-yellow-400">Budget Progress</h2>
+        <button
+          onClick={onEditBudget}
+          className="text-sm bg-gray-700 hover:bg-gray-600 text-sky-400 font-semibold py-1 px-3 rounded-md transition duration-300 flex items-center space-x-2"
+          aria-label="Edit budget"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.5L16.732 3.732z" /></svg>
+          <span>Edit</span>
+        </button>
+      </div>
+      <div className="space-y-4 max-h-[380px] overflow-y-auto pr-2">
+        {budgetedCategories.length > 0 ? budgetedCategories.map(([category, budgetedAmount]) => {
+          const spentAmount = actualSpending[category as ExpenseCategory] || 0;
+          return (
+            <div key={category}>
+              <div className="flex justify-between items-center mb-1 text-sm">
+                <span className="font-medium text-gray-300">{category}</span>
+                <span className="text-gray-400">
+                  <span className={spentAmount > budgetedAmount ? 'text-rose-400 font-bold' : 'text-gray-300'}>
+                    {formatCurrency(spentAmount)}
+                  </span> / {formatCurrency(budgetedAmount)}
+                </span>
+              </div>
+              <ProgressBar value={spentAmount} max={budgetedAmount} />
+            </div>
+          );
+        }) : (
+             <div className="text-center py-10 text-gray-500">
+                <p>No expense budgets set for this month.</p>
+            </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default BudgetProgress;
