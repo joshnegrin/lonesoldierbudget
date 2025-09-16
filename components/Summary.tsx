@@ -1,5 +1,5 @@
 import React from 'react';
-import { Transaction, TransactionType, Budget } from '../types.ts';
+import { Transaction, Budget, TRANSACTION_TYPE_INCOME, TRANSACTION_TYPE_EXPENSE } from '../types.ts';
 
 interface SummaryProps {
   transactions: Transaction[];
@@ -8,11 +8,11 @@ interface SummaryProps {
 
 const Summary: React.FC<SummaryProps> = ({ transactions, budget }) => {
   const totalIncome = transactions
-    .filter(t => t.type === TransactionType.Income)
+    .filter(t => t.type === TRANSACTION_TYPE_INCOME)
     .reduce((sum, t) => sum + t.amount, 0);
 
   const totalExpenses = transactions
-    .filter(t => t.type === TransactionType.Expense)
+    .filter(t => t.type === TRANSACTION_TYPE_EXPENSE)
     .reduce((sum, t) => sum + t.amount, 0);
 
   const balance = totalIncome - totalExpenses;
