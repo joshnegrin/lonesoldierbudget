@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Transaction, TransactionType, ExpenseCategory } from '../types.ts';
+import { Transaction, TransactionType, ExpenseCategory, ExpenseCategoryValues, TRANSACTION_TYPE_INCOME, TRANSACTION_TYPE_EXPENSE } from '../types.ts';
 
 interface EditTransactionModalProps {
   isOpen: boolean;
@@ -11,8 +11,8 @@ interface EditTransactionModalProps {
 const EditTransactionModal: React.FC<EditTransactionModalProps> = ({ isOpen, onClose, transaction, onUpdateTransaction }) => {
   const [description, setDescription] = useState('');
   const [amount, setAmount] = useState('');
-  const [type, setType] = useState<TransactionType>(TransactionType.Expense);
-  const [category, setCategory] = useState<ExpenseCategory>(ExpenseCategory.Groceries);
+  const [type, setType] = useState<TransactionType>(TRANSACTION_TYPE_EXPENSE);
+  const [category, setCategory] = useState<ExpenseCategory>('Groceries');
   const [date, setDate] = useState('');
   const [error, setError] = useState('');
 
@@ -21,7 +21,7 @@ const EditTransactionModal: React.FC<EditTransactionModalProps> = ({ isOpen, onC
       setDescription(transaction.description);
       setAmount(transaction.amount.toString());
       setType(transaction.type);
-      setCategory(transaction.category || ExpenseCategory.Groceries);
+      setCategory(transaction.category || 'Groceries');
       setDate(transaction.date.split('T')[0]); // Get YYYY-MM-DD for date input
     }
   }, [transaction]);
@@ -60,7 +60,7 @@ const EditTransactionModal: React.FC<EditTransactionModalProps> = ({ isOpen, onC
       description,
       amount: numericAmount,
       type,
-      category: type === TransactionType.Expense ? category : undefined,
+      category: type === TRANSACTION_TYPE_EXPENSE ? category : undefined,
       date: newDate.toISOString(),
     }, scope);
     onClose();
@@ -102,19 +102,19 @@ const EditTransactionModal: React.FC<EditTransactionModalProps> = ({ isOpen, onC
           </div>
           <div className="flex space-x-4">
             <div className="flex-1">
-              <input type="radio" id="edit-expense" name="edit-type" value={TransactionType.Expense} checked={type === TransactionType.Expense} onChange={() => setType(TransactionType.Expense)} className="hidden" />
-              <label htmlFor="edit-expense" className={`block w-full text-center p-2 rounded-md cursor-pointer transition ${type === TransactionType.Expense ? 'bg-rose-500 text-white font-bold' : 'bg-gray-700 hover:bg-gray-600'}`}>Expense</label>
+              <input type="radio" id="edit-expense" name="edit-type" value={TRANSACTION_TYPE_EXPENSE} checked={type === TRANSACTION_TYPE_EXPENSE} onChange={() => setType(TRANSACTION_TYPE_EXPENSE)} className="hidden" />
+              <label htmlFor="edit-expense" className={`block w-full text-center p-2 rounded-md cursor-pointer transition ${type === TRANSACTION_TYPE_EXPENSE ? 'bg-rose-500 text-white font-bold' : 'bg-gray-700 hover:bg-gray-600'}`}>Expense</label>
             </div>
             <div className="flex-1">
-              <input type="radio" id="edit-income" name="edit-type" value={TransactionType.Income} checked={type === TransactionType.Income} onChange={() => setType(TransactionType.Income)} className="hidden" />
-              <label htmlFor="edit-income" className={`block w-full text-center p-2 rounded-md cursor-pointer transition ${type === TransactionType.Income ? 'bg-emerald-500 text-white font-bold' : 'bg-gray-700 hover:bg-gray-600'}`}>Income</label>
+              <input type="radio" id="edit-income" name="edit-type" value={TRANSACTION_TYPE_INCOME} checked={type === TRANSACTION_TYPE_INCOME} onChange={() => setType(TRANSACTION_TYPE_INCOME)} className="hidden" />
+              <label htmlFor="edit-income" className={`block w-full text-center p-2 rounded-md cursor-pointer transition ${type === TRANSACTION_TYPE_INCOME ? 'bg-emerald-500 text-white font-bold' : 'bg-gray-700 hover:bg-gray-600'}`}>Income</label>
             </div>
           </div>
-          {type === TransactionType.Expense && (
+          {type === TRANSACTION_TYPE_EXPENSE && (
             <div>
               <label htmlFor="edit-category" className="block text-sm font-medium text-gray-300 mb-1">Category</label>
               <select id="edit-category" value={category} onChange={(e) => setCategory(e.target.value as ExpenseCategory)} className="w-full bg-gray-700 border-gray-600 rounded-md p-2 text-gray-100 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition">
-                {Object.values(ExpenseCategory).map((cat) => (<option key={cat} value={cat}>{cat}</option>))}
+                {ExpenseCategoryValues.map((cat) => (<option key={cat} value={cat}>{cat}</option>))}
               </select>
             </div>
           )}
