@@ -9,16 +9,21 @@ import EditTransactionModal from './components/EditTransactionModal.tsx';
 import BudgetSetup from './components/BudgetSetup.tsx';
 import SavingsGoal from './components/SavingsGoal.tsx';
 import BudgetProgress from './components/BudgetProgress.tsx';
-import { Transaction, Budget, ExpenseCategory, ExpenseCategoryValues, TRANSACTION_TYPE_INCOME, TRANSACTION_TYPE_EXPENSE } from './types.ts';
+import { Transaction, Budget, ExpenseCategory, TRANSACTION_TYPE_INCOME, TRANSACTION_TYPE_EXPENSE } from './types.ts';
 import { storageService } from './services/storageService.ts';
 
+// This is the updated, simplified constant to match the new Budget interface.
 const emptyBudget: Budget = {
   incomeGoal: 5000,
   savingsGoal: 500,
-  expenseBudgets: ExpenseCategoryValues.reduce((acc, cat) => {
-    acc[cat] = 0;
-    return acc;
-  }, {} as Record<ExpenseCategory, number>),
+  expenseBudgets: {
+    'Household': 0,
+    'Groceries': 0,
+    'Subscriptions': 0,
+    'Dining Out': 0,
+    'Travel': 0,
+    'Other': 0
+  },
   recurring: {},
 };
 
