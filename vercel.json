@@ -1,1 +1,14 @@
-full contents of vercel.json
+
+{
+  "headers": [
+    {
+      "source": "/(.*\\.tsx?)",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/javascript"
+        }
+      ]
+    }
+  ]
+}
