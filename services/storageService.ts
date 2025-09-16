@@ -1,4 +1,4 @@
-import { Transaction, Budget } from '../types';
+import { Transaction, Budget } from '../types.ts';
 
 const TRANSACTIONS_KEY = 'budget-visualizer-transactions';
 const BUDGETS_KEY = 'budget-visualizer-budgets';
