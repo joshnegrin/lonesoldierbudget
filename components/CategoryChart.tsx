@@ -14,7 +14,7 @@ const COLORS = [
 const CategoryChart: React.FC<CategoryChartProps> = ({ expenses }) => {
   const chartData = useMemo(() => {
     const categoryTotals = expenses.reduce((acc, expense) => {
-      const category = expense.category || ExpenseCategory.Other;
+      const category = expense.category || 'Other';
       acc[category] = (acc[category] || 0) + expense.amount;
       return acc;
     }, {} as Record<ExpenseCategory, number>);
