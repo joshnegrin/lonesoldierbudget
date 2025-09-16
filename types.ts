@@ -1,34 +1,37 @@
 export enum TransactionType {
-  Income = 'Income',
-  Expense = 'Expense',
+  Income = 'INCOME',
+  Expense = 'EXPENSE',
 }
 
 export enum ExpenseCategory {
-  Household = 'Household',
   Groceries = 'Groceries',
-  Subscriptions = 'Subscriptions',
+  Utilities = 'Utilities',
+  Rent = 'Rent',
+  Transportation = 'Transportation',
+  Entertainment = 'Entertainment',
+  Healthcare = 'Healthcare',
   DiningOut = 'Dining Out',
-  Travel = 'Travel',
+  Shopping = 'Shopping',
   Other = 'Other',
 }
 
 export interface Transaction {
   id: string;
-  recurringId?: string;
   description: string;
   amount: number;
   type: TransactionType;
   category?: ExpenseCategory;
   date: string; // ISO string
+  recurringId?: string;
 }
 
 export interface Budget {
-  incomeGoal: number;
-  savingsGoal: number;
-  expenseBudgets: Record<ExpenseCategory, number>;
-  recurring?: {
-    incomeGoal?: boolean;
-    savingsGoal?: boolean;
-    expenseBudgets?: Partial<Record<ExpenseCategory, boolean>>;
-  };
+    incomeGoal: number;
+    savingsGoal: number;
+    expenseBudgets: Record<ExpenseCategory, number>;
+    recurring: {
+        incomeGoal?: boolean;
+        savingsGoal?: boolean;
+        expenseBudgets?: Partial<Record<ExpenseCategory, boolean>>;
+    };
 }
