@@ -1,5 +1,5 @@
 import React from 'react';
-import { Budget } from '../types';
+import { Budget } from '../types.ts';
 
 interface SavingsGoalProps {
   budget: Budget;
