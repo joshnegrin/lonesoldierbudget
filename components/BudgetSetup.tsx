@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { Budget, ExpenseCategory } from '../types';
+import { Budget, ExpenseCategory } from '../types.ts';
 
 interface BudgetSetupProps {
   isOpen: boolean;
