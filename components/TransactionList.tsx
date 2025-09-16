@@ -1,5 +1,5 @@
 import React from 'react';
-import { Transaction, TransactionType } from '../types.ts';
+import { Transaction, TransactionType, TRANSACTION_TYPE_INCOME } from '../types.ts';
 
 interface TransactionListProps {
   title: string;
@@ -16,7 +16,7 @@ const TransactionItem: React.FC<{ transaction: Transaction; onDelete: (id: strin
             {transaction.category && <p className="text-xs text-gray-400">{transaction.category}</p>}
         </div>
         <div className="flex items-center space-x-2">
-            <span className={`font-semibold ${type === TransactionType.Income ? 'text-emerald-400' : 'text-rose-400'}`}>
+            <span className={`font-semibold ${type === TRANSACTION_TYPE_INCOME ? 'text-emerald-400' : 'text-rose-400'}`}>
                 {transaction.amount.toLocaleString('he-IL', { style: 'currency', currency: 'ILS' })}
             </span>
             <div className="flex items-center space-x-1 opacity-0 group-hover:opacity-100 transition-opacity">
@@ -44,7 +44,7 @@ const TransactionItem: React.FC<{ transaction: Transaction; onDelete: (id: strin
 const TransactionList: React.FC<TransactionListProps> = ({ title, transactions, onDelete, onEdit, type }) => {
   return (
     <div className="bg-gray-800 p-6 rounded-xl shadow-lg">
-      <h2 className={`text-xl font-semibold mb-4 ${type === TransactionType.Income ? 'text-emerald-400' : 'text-rose-400'}`}>{title}</h2>
+      <h2 className={`text-xl font-semibold mb-4 ${type === TRANSACTION_TYPE_INCOME ? 'text-emerald-400' : 'text-rose-400'}`}>{title}</h2>
       {transactions.length > 0 ? (
         <ul className="space-y-3 max-h-96 overflow-y-auto pr-2">
           {transactions
