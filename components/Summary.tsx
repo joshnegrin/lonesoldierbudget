@@ -1,5 +1,5 @@
 import React from 'react';
-import { Transaction, TransactionType, Budget } from '../types';
+import { Transaction, TransactionType, Budget } from '../types.ts';
 
 interface SummaryProps {
   transactions: Transaction[];
