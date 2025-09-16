@@ -1,16 +1,16 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import Header from './components/Header';
-import Summary from './components/Summary';
-import TransactionForm from './components/TransactionForm';
-import TransactionList from './components/TransactionList';
-import CategoryChart from './components/CategoryChart';
-import EditTransactionModal from './components/EditTransactionModal';
-import BudgetSetup from './components/BudgetSetup';
-import SavingsGoal from './components/SavingsGoal';
-import BudgetProgress from './components/BudgetProgress';
-import { Transaction, TransactionType, Budget, ExpenseCategory } from './types';
-import { storageService } from './services/storageService';
+import Header from './components/Header.tsx';
+import Summary from './components/Summary.tsx';
+import TransactionForm from './components/TransactionForm.tsx';
+import TransactionList from './components/TransactionList.tsx';
+import CategoryChart from './components/CategoryChart.tsx';
+import EditTransactionModal from './components/EditTransactionModal.tsx';
+import BudgetSetup from './components/BudgetSetup.tsx';
+import SavingsGoal from './components/SavingsGoal.tsx';
+import BudgetProgress from './components/BudgetProgress.tsx';
+import { Transaction, TransactionType, Budget, ExpenseCategory } from './types.ts';
+import { storageService } from './services/storageService.ts';
 
 const emptyBudget: Budget = {
   incomeGoal: 5000,
