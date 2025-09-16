@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TransactionType, ExpenseCategory } from '../types.ts';
+import { TransactionType, ExpenseCategory, ExpenseCategoryValues, TRANSACTION_TYPE_INCOME, TRANSACTION_TYPE_EXPENSE } from '../types.ts';
 
 interface TransactionFormProps {
   onAddTransaction: (transaction: {
@@ -15,8 +15,8 @@ interface TransactionFormProps {
 const TransactionForm: React.FC<TransactionFormProps> = ({ onAddTransaction, currentDate }) => {
   const [description, setDescription] = useState('');
   const [amount, setAmount] = useState('');
-  const [type, setType] = useState<TransactionType>(TransactionType.Expense);
-  const [category, setCategory] = useState<ExpenseCategory>(ExpenseCategory.Groceries);
+  const [type, setType] = useState<TransactionType>(TRANSACTION_TYPE_EXPENSE);
+  const [category, setCategory] = useState<ExpenseCategory>('Groceries');
   const [isRecurring, setIsRecurring] = useState(false);
   const [recurrence, setRecurrence] = useState(1);
   const [error, setError] = useState('');
@@ -34,7 +34,7 @@ const TransactionForm: React.FC<TransactionFormProps> = ({ onAddTransaction, cur
       description,
       amount: numericAmount,
       type,
-      category: type === TransactionType.Expense ? category : undefined,
+      category: type === TRANSACTION_TYPE_EXPENSE ? category : undefined,
       date: currentDate.toISOString(),
     }, isRecurring ? recurrence : 0);
 
@@ -73,16 +73,16 @@ const TransactionForm: React.FC<TransactionFormProps> = ({ onAddTransaction, cur
         
         <div className="flex space-x-4">
           <div className="flex-1">
-              <input type="radio" id="expense" name="type" value={TransactionType.Expense} checked={type === TransactionType.Expense} onChange={() => setType(TransactionType.Expense)} className="hidden" />
-              <label htmlFor="expense" className={`block w-full text-center p-2 rounded-md cursor-pointer transition ${type === TransactionType.Expense ? 'bg-rose-500 text-white font-bold' : 'bg-gray-700 hover:bg-gray-600'}`}>Expense</label>
+              <input type="radio" id="expense" name="type" value={TRANSACTION_TYPE_EXPENSE} checked={type === TRANSACTION_TYPE_EXPENSE} onChange={() => setType(TRANSACTION_TYPE_EXPENSE)} className="hidden" />
+              <label htmlFor="expense" className={`block w-full text-center p-2 rounded-md cursor-pointer transition ${type === TRANSACTION_TYPE_EXPENSE ? 'bg-rose-500 text-white font-bold' : 'bg-gray-700 hover:bg-gray-600'}`}>Expense</label>
           </div>
           <div className="flex-1">
-              <input type="radio" id="income" name="type" value={TransactionType.Income} checked={type === TransactionType.Income} onChange={() => setType(TransactionType.Income)} className="hidden" />
-              <label htmlFor="income" className={`block w-full text-center p-2 rounded-md cursor-pointer transition ${type === TransactionType.Income ? 'bg-emerald-500 text-white font-bold' : 'bg-gray-700 hover:bg-gray-600'}`}>Income</label>
+              <input type="radio" id="income" name="type" value={TRANSACTION_TYPE_INCOME} checked={type === TRANSACTION_TYPE_INCOME} onChange={() => setType(TRANSACTION_TYPE_INCOME)} className="hidden" />
+              <label htmlFor="income" className={`block w-full text-center p-2 rounded-md cursor-pointer transition ${type === TRANSACTION_TYPE_INCOME ? 'bg-emerald-500 text-white font-bold' : 'bg-gray-700 hover:bg-gray-600'}`}>Income</label>
           </div>
         </div>
 
-        {type === TransactionType.Expense && (
+        {type === TRANSACTION_TYPE_EXPENSE && (
           <div>
             <label htmlFor="category" className="block text-sm font-medium text-gray-300 mb-1">Category</label>
             <select
@@ -91,7 +91,7 @@ const TransactionForm: React.FC<TransactionFormProps> = ({ onAddTransaction, cur
               onChange={(e) => setCategory(e.target.value as ExpenseCategory)}
               className="w-full bg-gray-700 border-gray-600 rounded-md p-2 text-gray-100 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition"
             >
-              {Object.values(ExpenseCategory).map((cat) => (
+              {ExpenseCategoryValues.map((cat) => (
                 <option key={cat} value={cat}>{cat}</option>
               ))}
             </select>
