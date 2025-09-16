@@ -9,15 +9,14 @@ import EditTransactionModal from './components/EditTransactionModal.tsx';
 import BudgetSetup from './components/BudgetSetup.tsx';
 import SavingsGoal from './components/SavingsGoal.tsx';
 import BudgetProgress from './components/BudgetProgress.tsx';
-import { Transaction, TransactionType, Budget, ExpenseCategory } from './types.ts';
+import { Transaction, Budget, ExpenseCategory, ExpenseCategoryValues, TRANSACTION_TYPE_INCOME, TRANSACTION_TYPE_EXPENSE } from './types.ts';
 import { storageService } from './services/storageService.ts';
 
 const emptyBudget: Budget = {
   incomeGoal: 5000,
   savingsGoal: 500,
-  expenseBudgets: Object.values(ExpenseCategory).reduce((acc, cat) => {
-    // FIX: Cast `cat` from string to `ExpenseCategory` to use it as an index.
-    acc[cat as ExpenseCategory] = 0;
+  expenseBudgets: ExpenseCategoryValues.reduce((acc, cat) => {
+    acc[cat] = 0;
     return acc;
   }, {} as Record<ExpenseCategory, number>),
   recurring: {},
@@ -163,8 +162,8 @@ function App() {
     }));
   };
 
-  const incomeTransactions = filteredTransactions.filter(t => t.type === TransactionType.Income);
-  const expenseTransactions = filteredTransactions.filter(t => t.type === TransactionType.Expense);
+  const incomeTransactions = filteredTransactions.filter(t => t.type === TRANSACTION_TYPE_INCOME);
+  const expenseTransactions = filteredTransactions.filter(t => t.type === TRANSACTION_TYPE_EXPENSE);
 
   const totalIncome = incomeTransactions.reduce((sum, t) => sum + t.amount, 0);
   const totalExpenses = expenseTransactions.reduce((sum, t) => sum + t.amount, 0);
@@ -201,14 +200,14 @@ function App() {
               transactions={incomeTransactions}
               onDelete={handleDeleteTransaction}
               onEdit={setEditingTransaction}
-              type={TransactionType.Income}
+              type={TRANSACTION_TYPE_INCOME}
             />
             <TransactionList
               title="Expenses"
               transactions={expenseTransactions}
               onDelete={handleDeleteTransaction}
               onEdit={setEditingTransaction}
-              type={TransactionType.Expense}
+              type={TRANSACTION_TYPE_EXPENSE}
             />
           </div>
         </main>
