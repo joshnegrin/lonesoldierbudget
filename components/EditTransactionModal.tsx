@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Transaction, TransactionType, ExpenseCategory } from '../types';
+import { Transaction, TransactionType, ExpenseCategory } from '../types.ts';
 
 interface EditTransactionModalProps {
   isOpen: boolean;
