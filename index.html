@@ -5,30 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Monthly Budget Visualizer</title>
     <script src="https://cdn.tailwindcss.com"></script>
-  <script type="importmap">
-{
-  "imports": {
-    "react": "https://aistudiocdn.com/react@^19.1.1",
-    "react/": "https://aistudiocdn.com/react@^19.1.1/",
-    "recharts": "https://aistudiocdn.com/recharts@^3.2.0",
-    "react-dom/": "https://aistudiocdn.com/react-dom@^19.1.1/",
-    "uuid": "https://aistudiocdn.com/uuid@^13.0.0"
-  }
-}
-</script>
-<!-- This is the translator script! -->
-<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-<!-- This tells Babel what file extensions to look for -->
-<script>Babel.registerPreset("tsx", {
-  presets: [
-    [Babel.availablePresets["typescript"], { allExtensions: true, isTSX: true }],
-    Babel.availablePresets["react"]
-  ]
-});</script>
-</head>
+    <script type="importmap">
+    {
+      "imports": {
+        "react": "https://aistudiocdn.com/react@^19.1.1",
+        "react/": "https://aistudiocdn.com/react@^19.1.1/",
+        "recharts": "https://aistudiocdn.com/recharts@^3.2.0",
+        "react-dom/": "https://aistudiocdn.com/react-dom@^19.1.1/",
+        "uuid": "https://aistudiocdn.com/uuid@^13.0.0"
+      }
+    }
+    </script>
+    <!-- This is the translator script! -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <!-- The complex preset registration script has been REMOVED from here. -->
+  </head>
   <body class="bg-gray-900 text-gray-100">
     <div id="root"></div>
-    <!-- This tag is modified to tell the translator to run on our code -->
-    <script type="text/babel" data-presets="tsx" data-type="module" src="/index.tsx"></script>
+    <!-- 
+      This script tag is now simplified and uses the standard, built-in presets.
+      This is the key to making everything work.
+    -->
+    <script type="text/babel" data-presets="typescript,react" data-type="module" src="/index.tsx"></script>
   </body>
 </html>
