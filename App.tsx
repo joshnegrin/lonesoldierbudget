@@ -16,7 +16,8 @@ const emptyBudget: Budget = {
   incomeGoal: 5000,
   savingsGoal: 500,
   expenseBudgets: Object.values(ExpenseCategory).reduce((acc, cat) => {
-    acc[cat] = 0;
+    // FIX: Cast `cat` from string to `ExpenseCategory` to use it as an index.
+    acc[cat as ExpenseCategory] = 0;
     return acc;
   }, {} as Record<ExpenseCategory, number>),
   recurring: {},
