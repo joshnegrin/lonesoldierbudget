@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TransactionType, ExpenseCategory } from '../types';
+import { TransactionType, ExpenseCategory } from '../types.ts';
 
 interface TransactionFormProps {
   onAddTransaction: (transaction: {
