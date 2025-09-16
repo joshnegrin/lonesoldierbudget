@@ -1,5 +1,5 @@
 import React from 'react';
-import { Transaction, TransactionType } from '../types';
+import { Transaction, TransactionType } from '../types.ts';
 
 interface TransactionListProps {
   title: string;
