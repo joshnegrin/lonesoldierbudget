@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { Budget, ExpenseCategory } from '../types.ts';
+import { Budget, ExpenseCategory, ExpenseCategoryValues } from '../types.ts';
 
 interface BudgetSetupProps {
   isOpen: boolean;
@@ -176,7 +176,7 @@ const BudgetSetup: React.FC<BudgetSetupProps> = ({ isOpen, onClose, onSave, init
             <div>
             <h3 className="text-xl font-semibold text-yellow-400 mb-4">Expense Budgets</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
-                {Object.values(ExpenseCategory).map(category => (
+                {ExpenseCategoryValues.map(category => (
                     <div key={category} className="flex items-end space-x-2">
                         <div className="flex-grow">
                             <label htmlFor={category} className="block text-sm font-medium text-gray-300 mb-1">{category} (₪)</label>
