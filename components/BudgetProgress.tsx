@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { Transaction, Budget, ExpenseCategory } from '../types';
+import { Transaction, Budget, ExpenseCategory } from '../types.ts';
 
 interface BudgetProgressProps {
   expenses: Transaction[];
