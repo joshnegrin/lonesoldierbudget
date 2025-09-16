@@ -29,13 +29,29 @@ export interface Transaction {
   date: string; // ISO string
 }
 
+// This interface is now simplified to use an explicit object shape
+// instead of the complex 'Record' utility type.
 export interface Budget {
     incomeGoal: number;
     savingsGoal: number;
-    expenseBudgets: Record<ExpenseCategory, number>;
+    expenseBudgets: {
+        'Household': number;
+        'Groceries': number;
+        'Subscriptions': number;
+        'Dining Out': number;
+        'Travel': number;
+        'Other': number;
+    };
     recurring?: {
         incomeGoal?: boolean;
         savingsGoal?: boolean;
-        expenseBudgets?: Partial<Record<ExpenseCategory, boolean>>;
+        expenseBudgets?: {
+            'Household'?: boolean;
+            'Groceries'?: boolean;
+            'Subscriptions'?: boolean;
+            'Dining Out'?: boolean;
+            'Travel'?: boolean;
+            'Other'?: boolean;
+        };
     };
 }
